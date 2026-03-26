@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/masv3971/goladok3/ladokmocks"
-	"github.com/masv3971/goladok3/ladoktypes"
+	"github.com/SUNET/goladok3/ladokmocks"
+	"github.com/SUNET/goladok3/ladoktypes"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -3,7 +3,7 @@ package ladokmocks
 import (
 	"encoding/json"
 
-	"github.com/masv3971/goladok3/ladoktypes"
+	"github.com/SUNET/goladok3/ladoktypes"
 )
 
 // BehorighetsprofilUID uid for testing behörighetsprofiler

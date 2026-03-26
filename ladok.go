@@ -15,7 +15,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/masv3971/goladok3/ladoktypes"
+	"github.com/SUNET/goladok3/ladoktypes"
 	"golang.org/x/time/rate"
 )
 

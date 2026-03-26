@@ -1,6 +1,6 @@
 package ladokmocks
 
-import "github.com/masv3971/goladok3/ladoktypes"
+import "github.com/SUNET/goladok3/ladoktypes"
 
 // JSONErrors500 ladok error
 var JSONErrors500 = []byte(`

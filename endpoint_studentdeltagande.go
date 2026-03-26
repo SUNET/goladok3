@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/masv3971/goladok3/ladoktypes"
+	"github.com/SUNET/goladok3/ladoktypes"
 )
 
 // studentdeltagandeService xx

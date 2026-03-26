@@ -3,7 +3,7 @@ package goladok3
 import (
 	"testing"
 
-	"github.com/masv3971/goladok3/ladoktypes"
+	"github.com/SUNET/goladok3/ladoktypes"
 	"github.com/stretchr/testify/assert"
 )
 

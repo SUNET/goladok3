@@ -80,3 +80,31 @@ func TestErrorToString(t *testing.T) {
 		})
 	}
 }
+
+func TestLadokErrorNil(t *testing.T) {
+	var e *LadokError
+	assert.Equal(t, "", e.Error())
+}
+
+func TestNewLadokError(t *testing.T) {
+	e := NewLadokError()
+	assert.Empty(t, e.FelUID)
+	assert.Empty(t, e.Meddelande)
+	assert.NotNil(t, e.Link)
+}
+
+func TestPermissionErrorSingle(t *testing.T) {
+	e := PermissionError{
+		Msg:                 "missing permission",
+		MissingPermissionID: 123,
+		PermissionLevel:     "read",
+	}
+	assert.Equal(t, "missing permission 123 read", e.Error())
+}
+
+func TestSentinelErrors(t *testing.T) {
+	assert.Error(t, ErrNoValidContentType)
+	assert.Error(t, ErrNoEnvFound)
+	assert.Error(t, ErrNotSufficientPermissions)
+	assert.Error(t, ErrNoPermissionProvided)
+}

@@ -3,7 +3,7 @@ package goladok3
 import (
 	"context"
 
-	"github.com/masv3971/goladok3/ladoktypes"
+	"github.com/SUNET/goladok3/ladoktypes"
 )
 
 func (c *Client) environment(ctx context.Context) (string, error) {

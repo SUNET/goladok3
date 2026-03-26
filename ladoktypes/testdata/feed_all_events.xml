@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>urn:id:100</id>
+  <entry>
+    <id>entry-1</id>
+    <content type="application/xml">
+      <AnvandareAndradEvent xmlns:ki="http://schemas.ladok.se/kataloginformation">
+        <ki:HandelseUID>h-1</ki:HandelseUID>
+        <ki:EventContext>
+          <ki:AnvandareUID>u-1</ki:AnvandareUID>
+          <ki:Anvandarnamn>sys@ladok.se</ki:Anvandarnamn>
+          <ki:LarosateID>27</ki:LarosateID>
+        </ki:EventContext>
+        <ki:AnvandareUID>a-1</ki:AnvandareUID>
+        <ki:Anvandarnamnet>test@school.se</ki:Anvandarnamnet>
+        <ki:Efternamn>Svensson</ki:Efternamn>
+        <ki:Fornamn>Erik</ki:Fornamn>
+      </AnvandareAndradEvent>
+    </content>
+  </entry>
+  <entry>
+    <id>entry-2</id>
+    <content type="application/xml">
+      <AnvandareSkapadEvent xmlns:ki="http://schemas.ladok.se/kataloginformation">
+        <ki:HandelseUID>h-2</ki:HandelseUID>
+        <ki:EventContext>
+          <ki:AnvandareUID>u-1</ki:AnvandareUID>
+          <ki:Anvandarnamn>sys@ladok.se</ki:Anvandarnamn>
+          <ki:LarosateID>27</ki:LarosateID>
+        </ki:EventContext>
+        <ki:AnvandareUID>a-2</ki:AnvandareUID>
+        <ki:Anvandarnamnet>new@school.se</ki:Anvandarnamnet>
+        <ki:Fornamn>Nils</ki:Fornamn>
+      </AnvandareSkapadEvent>
+    </content>
+  </entry>
+  <entry>
+    <id>entry-3</id>
+    <content type="application/xml">
+      <ExternPartEvent xmlns:ki="http://schemas.ladok.se/kataloginformation">
+        <ki:HandelseUID>h-3</ki:HandelseUID>
+        <ki:EventContext>
+          <ki:AnvandareUID>u-1</ki:AnvandareUID>
+          <ki:Anvandarnamn>sys@ladok.se</ki:Anvandarnamn>
+          <ki:LarosateID>-1</ki:LarosateID>
+        </ki:EventContext>
+        <ki:EventTyp>SKAPAD</ki:EventTyp>
+        <ki:Id>12345</ki:Id>
+        <ki:Kod>CODE</ki:Kod>
+        <ki:LandID>25</ki:LandID>
+        <ki:TypAvExternPartID>1</ki:TypAvExternPartID>
+      </ExternPartEvent>
+    </content>
+  </entry>
+  <entry>
+    <id>entry-4</id>
+    <content type="application/xml">
+      <KontaktuppgifterEvent xmlns:si="http://schemas.ladok.se/studentinformation">
+        <si:HandelseUID>h-4</si:HandelseUID>
+        <si:EventContext>
+          <si:AnvandareUID>u-1</si:AnvandareUID>
+          <si:Anvandarnamn>sys@ladok.se</si:Anvandarnamn>
+          <si:LarosateID>27</si:LarosateID>
+        </si:EventContext>
+        <si:Handelsetyp>UPPDATERAD</si:Handelsetyp>
+        <si:Epostadress>mail@example.com</si:Epostadress>
+        <si:StudentUID>s-1</si:StudentUID>
+      </KontaktuppgifterEvent>
+    </content>
+  </entry>
+  <entry>
+    <id>entry-5</id>
+    <content type="application/xml">
+      <ResultatPaModulAttesteratEvent xmlns:rr="http://schemas.ladok.se/resultat">
+        <rr:HandelseUID>h-5</rr:HandelseUID>
+        <rr:EventContext>
+          <rr:AnvandareUID>u-1</rr:AnvandareUID>
+          <rr:Anvandarnamn>teacher@school.se</rr:Anvandarnamn>
+          <rr:LarosateID>27</rr:LarosateID>
+        </rr:EventContext>
+        <rr:Beslut>
+          <rr:BeslutUID>b-1</rr:BeslutUID>
+          <rr:Beslutsdatum>2021-10-07</rr:Beslutsdatum>
+          <rr:Beslutsfattare>Teacher</rr:Beslutsfattare>
+          <rr:BeslutsfattareUID>bf-1</rr:BeslutsfattareUID>
+        </rr:Beslut>
+        <rr:KursUID>k-1</rr:KursUID>
+        <rr:KursinstansUID>ki-1</rr:KursinstansUID>
+        <rr:KurstillfalleUID>kt-1</rr:KurstillfalleUID>
+        <rr:Resultat>
+          <rr:BetygsgradID>2302</rr:BetygsgradID>
+          <rr:BetygsskalaID>2</rr:BetygsskalaID>
+          <rr:Examinationsdatum>2021-10-01</rr:Examinationsdatum>
+          <rr:GiltigSomSlutbetyg>true</rr:GiltigSomSlutbetyg>
+          <rr:OmfattningsPoang>7.5</rr:OmfattningsPoang>
+          <rr:PrestationsPoang>7.5</rr:PrestationsPoang>
+          <rr:ResultatUID>r-1</rr:ResultatUID>
+        </rr:Resultat>
+        <rr:StudentUID>s-1</rr:StudentUID>
+        <rr:UtbildningsinstansUID>utb-1</rr:UtbildningsinstansUID>
+      </ResultatPaModulAttesteratEvent>
+    </content>
+  </entry>
+  <entry>
+    <id>entry-6</id>
+    <content type="application/xml">
+      <ResultatPaHelKursAttesteratEvent xmlns:rr="http://schemas.ladok.se/resultat">
+        <rr:HandelseUID>h-6</rr:HandelseUID>
+        <rr:EventContext>
+          <rr:AnvandareUID>u-1</rr:AnvandareUID>
+          <rr:Anvandarnamn>teacher@school.se</rr:Anvandarnamn>
+          <rr:LarosateID>27</rr:LarosateID>
+        </rr:EventContext>
+        <rr:Beslut>
+          <rr:BeslutUID>b-2</rr:BeslutUID>
+          <rr:Beslutsdatum>2021-10-21</rr:Beslutsdatum>
+          <rr:Beslutsfattare>Teacher2</rr:Beslutsfattare>
+          <rr:BeslutsfattareUID>bf-2</rr:BeslutsfattareUID>
+        </rr:Beslut>
+        <rr:KursUID>k-2</rr:KursUID>
+        <rr:Resultat>
+          <rr:ResultatUID>r-2</rr:ResultatUID>
+        </rr:Resultat>
+        <rr:StudentUID>s-2</rr:StudentUID>
+        <rr:UtbildningsinstansUID>utb-2</rr:UtbildningsinstansUID>
+      </ResultatPaHelKursAttesteratEvent>
+    </content>
+  </entry>
+  <entry>
+    <id>entry-7</id>
+    <content type="application/xml">
+      <LokalStudentEvent xmlns:si="http://schemas.ladok.se/studentinformation">
+        <si:HandelseUID>h-7</si:HandelseUID>
+        <si:EventContext>
+          <si:AnvandareUID>u-1</si:AnvandareUID>
+          <si:Anvandarnamn>sys@ladok.se</si:Anvandarnamn>
+          <si:LarosateID>27</si:LarosateID>
+        </si:EventContext>
+        <si:Handelsetyp>SKAPAD</si:Handelsetyp>
+        <si:Efternamn>Svensson</si:Efternamn>
+        <si:Fornamn>Erik</si:Fornamn>
+        <si:StudentUID>s-3</si:StudentUID>
+        <si:Personnummer>199001011234</si:Personnummer>
+        <si:Fodelsedata>1990-01-01</si:Fodelsedata>
+        <si:Kon>2</si:Kon>
+      </LokalStudentEvent>
+    </content>
+  </entry>
+</feed>
