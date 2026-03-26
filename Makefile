@@ -2,6 +2,7 @@ NAME                    := goladok3
 MODULE                  := github.com/SUNET/$(NAME)
 CURRENT_BRANCH          := $(shell git rev-parse --abbrev-ref HEAD)
 BUMP                    ?= patch
+MSG                     ?= $(BUMP) release
 FORCE                   ?=
 
 .PHONY: help test tidy release check-branch check-clean get-version
@@ -49,9 +50,6 @@ get-version:
 	@git tag -l "v*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$$' | head -n1 || echo "v0.0.0"
 
 release: check-branch check-clean tidy test
-ifndef MSG
-	$(error MSG is required. Usage: make release MSG="your commit message" [BUMP=patch|minor|major])
-endif
 	@echo "$(BUMP)" | grep -qE '^(major|minor|patch)$$' || \
 		{ echo "Error: BUMP must be major, minor, or patch (got: $(BUMP))"; exit 1; }
 	@git fetch --tags
