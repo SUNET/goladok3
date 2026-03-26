@@ -15,7 +15,8 @@
 				"streetsidesoftware.code-spell-checker-swedish",
 				"DavidAnson.vscode-markdownlint",
 				"zenor.makefile-creator",
-				"bungcip.better-toml"
+				"bungcip.better-toml",
+				"anthropic.claude-code"
 			]
 		}
 	},
