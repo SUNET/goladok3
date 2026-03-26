@@ -1,72 +1,85 @@
-.PHONY: update clean build build-all run package deploy test authors dist check-tag
+NAME                    := goladok3
+MODULE                  := github.com/SUNET/$(NAME)
+CURRENT_BRANCH          := $(shell git rev-parse --abbrev-ref HEAD)
+BUMP                    ?= patch
+FORCE                   ?=
 
-NAME 					:= goladok3
-TAGS					:= $(shell git tag)
-VERSION					:= $(shell tail -1 RELEASE.txt|awk -F" : " '{print $$1}')
-COMMIT_MSG				:= $(shell tail -1 RELEASE.txt|awk -F" : " '{print $$2}')
+.PHONY: help test tidy release check-branch check-clean get-version
 
-default: release-patch
-
-release-patch: check-tag check-files tidy test add commit release-tag push-tag push-main go-list
-		$(info relese ${NAME}@${VERSION})
+help: ## Show this help message
+	$(info Usage: make [target] [BUMP=patch|minor|major] [MSG="commit message"])
+	$(info )
+	$(info Targets:)
+	$(info   release       Run tests, bump version, tag, and push (default: patch))
+	$(info   test          Run all tests)
+	$(info   tidy          Run go mod tidy)
+	$(info   get-version   Show current version from git tags)
+	$(info )
+	$(info Examples:)
+	$(info   make release MSG="Add new endpoint")
+	$(info   make release BUMP=minor MSG="Add OIDC support")
+	$(info   make release BUMP=major MSG="Breaking API change")
+	$(info   make release BUMP=patch MSG="Fix bug" FORCE=true)
+	@:
 
 tidy:
-		$(info tidy up..)
-		go mod tidy
+	go mod tidy
 
 test:
-		$(info test ${NAME})
-		go test -v --cover .
+	go test -v --cover .
 
-git-status:
-	$(info files to be added:)
-	@git status
-	$(read -p "Press enter in order to precede")
-
-add: git-status
-	git add .
-
-commit:
-ifndef COMMIT_MSG
-	$(error No commit message found)
+check-branch:
+ifeq ($(CURRENT_BRANCH),main)
+else
+ifneq ($(FORCE),true)
+	$(error Not on main branch ($(CURRENT_BRANCH)) — use FORCE=true to override)
+else
+	$(warning Not on main branch ($(CURRENT_BRANCH)) — continuing because FORCE=true)
 endif
-		git commit -S -m"${NAME} release $(VERSION): $(COMMIT_MSG)"
-
-release-tag:
-		git tag ${VERSION}
-
-push-tag:
-		git push origin ${VERSION}
-
-push-main:
-		git push origin main
-
-check-tag:
-ifndef VERSION
-	$(error version is empty)
 endif
 
-	git fetch --tags
-ifeq ($(filter $(TAGS), $(VERSION)) ,$(VERSION))
-	$(error $(VERSION) is already used, make other one please)
+check-clean:
+ifneq ($(FORCE),true)
+	@if ! git diff --quiet HEAD 2>/dev/null; then \
+		echo "Error: working tree is dirty — commit or stash changes first (use FORCE=true to override)"; exit 1; \
+	fi
 endif
 
-go-list:	
-		GOPROXY=proxy.golang.org go list -m github.com/masv3971/${NAME}@${VERSION}
+get-version:
+	@git tag -l "v*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$$' | head -n1 || echo "v0.0.0"
 
-check-files: check-release-file check-license-file check-readme-file
-
-check-release-file:
-ifeq (,$(wildcard ./RELEASE.txt))
-	$(error RELEASE.txt file does not exists, make it!)
+release: check-branch check-clean tidy test
+ifndef MSG
+	$(error MSG is required. Usage: make release MSG="your commit message" [BUMP=patch|minor|major])
 endif
-
-check-license-file:
-ifeq (,$(wildcard ./LICENSE.md))
-	$(error LICENSE.md file does not exists, make it!)
-endif
-
-check-readme-file:
-ifeq (,$(wildcard ./README.md))
-	$(error README file does not exists, make it!)
-endif
+	@echo "$(BUMP)" | grep -qE '^(major|minor|patch)$$' || \
+		{ echo "Error: BUMP must be major, minor, or patch (got: $(BUMP))"; exit 1; }
+	@git fetch --tags
+	@LATEST=$$(git tag -l "v*" --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$$' | head -n1); \
+	if [ -z "$$LATEST" ]; then \
+		echo "No existing version tags found, starting at v0.0.0"; \
+		LATEST="v0.0.0"; \
+	fi; \
+	CURRENT=$$(echo "$$LATEST" | sed 's/^v//'); \
+	MAJOR=$$(echo "$$CURRENT" | cut -d. -f1); \
+	MINOR=$$(echo "$$CURRENT" | cut -d. -f2); \
+	PATCH=$$(echo "$$CURRENT" | cut -d. -f3); \
+	case "$(BUMP)" in \
+		major) MAJOR=$$((MAJOR + 1)); MINOR=0; PATCH=0 ;; \
+		minor) MINOR=$$((MINOR + 1)); PATCH=0 ;; \
+		patch) PATCH=$$((PATCH + 1)) ;; \
+	esac; \
+	NEW_TAG="v$${MAJOR}.$${MINOR}.$${PATCH}"; \
+	echo ""; \
+	echo "$$LATEST -> $$NEW_TAG ($(BUMP))"; \
+	echo ""; \
+	git tag -a "$$NEW_TAG" -m "$(NAME) release $$NEW_TAG: $(MSG)"; \
+	git push origin "$$NEW_TAG"; \
+	git push origin $(CURRENT_BRANCH); \
+	echo ""; \
+	echo "==> Released $$NEW_TAG"; \
+	echo ""; \
+	curl -sf "https://proxy.golang.org/$(MODULE)/@v/$${NEW_TAG}.info" > /dev/null && \
+		echo "==> Go module proxy indexed $$NEW_TAG" || \
+		echo "==> Warning: proxy indexing failed (will be indexed on first fetch)"; \
+	echo ""
